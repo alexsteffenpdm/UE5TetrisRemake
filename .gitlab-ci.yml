@@ -1,0 +1,31 @@
+stages:
+  - build
+  - run
+
+variables:
+  VERSION: "0.0.1-1"
+
+before_script:
+  - export GITLAB_CI_TOKEN=$(cat /usr/share/gitlab-service-tokens/gitlab-ci-token.txt)
+  - echo $GITLAB_CI_TOKEN | docker login registry.gitlab.homeserver.org -u gitlab-ci --password-stdin
+
+Build_container:
+  stage: build
+  tags:
+    - ue5-build 
+  script:
+    - echo "Building container"
+    - docker build -t registry.gitlab.homeserver.org/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$VERSION -f gitlab-ci/Dockerfile . 
+    - echo "Attempting to push container"
+    - docker image push registry.gitlab.homeserver.org/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$VERSION
+Run:
+  stage: run
+  tags:
+    - ue5-build
+  artifacts:
+    name: "$CI_JOB_NAME-UAT-BuildLog.txt"
+    paths:
+      - "/home/ue4/Library/Logs/Unreal Engine/LocalBuildLogs/Log.txt"
+    expire_in: 1 week
+  script:
+    - docker run registry.gitlab.homeserver.org/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$VERSION

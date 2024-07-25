@@ -1,0 +1,5 @@
+PLATFORM=Linux
+CLIENT_CONFIG=Shipping
+SERVER_CONFIG=Shipping
+PROJECT_PATH="/project/Tetris.uproject"
+ARCHIVE_DIR="/project/Packaged"
