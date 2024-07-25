@@ -1,4 +1,4 @@
-FROM FROM ghcr.io/epicgames/unreal-engine:dev-5.4.2
+FROM ghcr.io/epicgames/unreal-engine:dev-5.4.2
 USER ue4
 WORKDIR /
 
