@@ -1,7 +1,6 @@
-FROM registry.gitlab.homeserver.org/dist/ue5baseimage:0.2
+FROM FROM ghcr.io/epicgames/unreal-engine:dev-5.4.2
 USER ue4
 WORKDIR /
-RUN sudo chown -R ue4:ue4 /home/ue4
 
 COPY Tetris.uproject /home/ue4/UnrealEngine/project/Tetris.uproject
 COPY Source /home/ue4/UnrealEngine/project/Source
